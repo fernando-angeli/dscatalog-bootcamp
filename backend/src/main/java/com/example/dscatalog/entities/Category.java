@@ -2,13 +2,12 @@ package com.example.dscatalog.entities;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Table(name = "tb_category")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,7 +15,7 @@ import java.util.Objects;
 public class Category implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
 
