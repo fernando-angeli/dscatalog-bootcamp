@@ -3,8 +3,11 @@ package com.example.dscatalog.services;
 import com.example.dscatalog.dto.CategoryDTO;
 import com.example.dscatalog.entities.Category;
 import com.example.dscatalog.repositories.CategoryRepository;
+import com.example.dscatalog.services.exceptions.DatabaseException;
 import com.example.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -52,7 +55,17 @@ public class CategoryService {
             entity = categoryRepository.save(entity);
             return new CategoryDTO(entity);
         }catch (EntityNotFoundException e){
-            throw new ResourceNotFoundException("Id "+ id+ " não encontrado");
+            throw new ResourceNotFoundException("Id "+ id+ " não encontrado.");
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            categoryRepository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException("Id "+ id+ " não encontrado.");
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Categoria já vinculada a um produto, não pode ser deletada.");
         }
     }
 }
