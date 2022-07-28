@@ -6,13 +6,11 @@ import com.example.dscatalog.entities.Category;
 import com.example.dscatalog.entities.Product;
 import com.example.dscatalog.repositories.CategoryRepository;
 import com.example.dscatalog.repositories.ProductRepository;
-import com.example.dscatalog.services.exceptions.DatabaseException;
 import com.example.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,9 +27,9 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAllPaged(PageRequest pageRequest){
-        Page<Product> list = productRepository.findAll(pageRequest);
-        return list.map(pro -> new ProductDTO(pro));
+    public Page<ProductDTO> findAllPaged(Pageable pageable){
+        Page<Product> list = productRepository.findAll(pageable);
+        return list.map(ProductDTO::new);
     }
 
     @Transactional(readOnly = true)
@@ -66,8 +64,6 @@ public class ProductService {
             productRepository.deleteById(id);
         }catch (EmptyResultDataAccessException e){
             throw new ResourceNotFoundException("Id "+ id+ " não encontrado.");
-        }catch (DataIntegrityViolationException e){
-            throw new DatabaseException("Categoria já vinculada a um produto, não pode ser deletada.");
         }
     }
 
