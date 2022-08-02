@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class ProductDTO implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -27,7 +29,7 @@ public class ProductDTO implements Serializable {
     private String imgUrl;
     @PastOrPresent(message = "A data do produto não pode ser futura.")
     private Instant date;
-    private List<CategoryDTO> categories = new ArrayList<CategoryDTO>();
+    private List<CategoryDTO> categories = new ArrayList<>();
 
     public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
         this.id = id;

@@ -4,13 +4,14 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-    @Entity
+@Entity
 @Table(name = "tb_category")
 @Getter
 @Setter
@@ -18,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
