@@ -5,6 +5,7 @@ import com.example.dscatalog.entities.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -17,10 +18,14 @@ public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @Size(min = 3, max = 60, message = "O nome deve ter entre 3 e 60 caracteres.")
+    @NotBlank(message = "Campo obrigatório.")
     private String name;
     private String description;
+    @Positive(message = "O preço deve ser positivo.")
     private Double price;
     private String imgUrl;
+    @PastOrPresent(message = "A data do produto não pode ser futura.")
     private Instant date;
     private List<CategoryDTO> categories = new ArrayList<CategoryDTO>();
 
