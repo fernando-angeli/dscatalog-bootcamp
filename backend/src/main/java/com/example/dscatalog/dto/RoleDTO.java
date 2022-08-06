@@ -5,14 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleDTO implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;

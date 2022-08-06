@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class ProductDTO implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
