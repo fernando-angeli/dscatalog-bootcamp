@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(SpringExtension.class)
 public class ProductServiceTests {
@@ -59,12 +60,14 @@ public class ProductServiceTests {
         productDTO = Factory.createProductDTO();
         category = Factory.createCategory();
 
-        when(repository.findAll((Pageable)ArgumentMatchers.any())).thenReturn(page);
+        when(repository.findAll((Pageable)any())).thenReturn(page);
 
-        when(repository.save(ArgumentMatchers.any())).thenReturn(product);
+        when(repository.save(any())).thenReturn(product);
 
         when(repository.findById(existingId)).thenReturn(Optional.of(product));
         when(repository.findById(nonExistingId)).thenReturn(Optional.empty());
+
+        when(repository.find(any(), any(), any())).thenReturn(page);
 
         when(repository.getOne(existingId)).thenReturn(product);
         when(repository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
@@ -83,10 +86,9 @@ public class ProductServiceTests {
 
         Pageable pageable = PageRequest.of(0, 10);
 
-        Page<ProductDTO> result = service.findAllPaged(pageable);
+        Page<ProductDTO> result = service.findAllPaged(0L, "", pageable);
 
         Assertions.assertNotNull(result);
-        verify(repository).findAll(pageable);
     }
 
     @Test

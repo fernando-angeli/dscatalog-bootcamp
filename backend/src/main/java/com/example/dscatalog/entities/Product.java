@@ -14,7 +14,6 @@ import java.util.Set;
 @Table(name = "tb_product")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product implements Serializable {
@@ -36,7 +35,6 @@ public class Product implements Serializable {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    @ToString.Exclude
     Set<Category> categories = new HashSet<>();
 
     public Product(Long id, String name, String description, Double price, String imgUrl, Instant date) {

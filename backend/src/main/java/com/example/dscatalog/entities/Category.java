@@ -14,7 +14,6 @@ import java.util.Set;
 @Table(name = "tb_category")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category implements Serializable {
@@ -30,7 +29,6 @@ public class Category implements Serializable {
     private Instant updatedAt;
 
     @ManyToMany(mappedBy = "categories")
-    @ToString.Exclude
     private Set<Product> products = new HashSet<>();
 
     public Category(Long id, String name) {
